@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.mxiaixy.mapper.UserMapper">
+    <insert id="save" useGeneratedKeys="true" keyProperty="id">
+        insert into t_user(username,password) values(#{username},#{password})
+    </insert>
+    <insert id="saveUserAndRole">
+        insert into t_user_role(userid ,roleid) VALUES (#{userId},#{roleId})
+    </insert>
+    <update id="update">
+        update t_user
+        <set>
+            username=#{username},
+            <if test="password !=null and password != ''">
+                password=#{password}
+            </if>
+        </set>
+        where id=#{id}
+    </update>
+    <delete id="delUserById">
+        DELETE from t_user where id=#{id}
+    </delete>
+    <delete id="delUserAndRoleBy">
+        DELETE from t_user_role where userid=#{id}
+    </delete>
+
+
+    <select id="findListUser" resultMap="userMap">
+        SELECT t_user.*,t_role.id AS role_id,t_role.role_name,t_role.view_name FROM t_user
+        LEFT JOIN t_user_role ON t_user_role.userid = t_user .id
+        LEFT JOIN t_role ON t_user_role.roleid = t_role.id
+    </select>
+    <resultMap id="userMap" type="User">
+        <id column="id" property="id"/>
+        <result column="username" property="username"/>
+        <result column="password" property="password"/>
+        <collection property="roleList" ofType="Role">
+            <id column="role_id" property="id"/>
+            <result column="role_name" property="roleName"/>
+            <result column="view_name" property="viewName"/>
+        </collection>
+
+    </resultMap>
+    <select id="findUserById" resultMap="userMap">
+        SELECT t_user.*,t_role.id AS role_id,t_role.role_name,t_role.view_name FROM t_user
+        LEFT JOIN t_user_role ON t_user_role.userid = t_user .id
+        LEFT JOIN t_role ON t_user_role.roleid = t_role.id
+        where t_user.id=#{id}
+    </select>
+</mapper>
