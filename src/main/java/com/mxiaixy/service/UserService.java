@@ -1,6 +1,7 @@
 package com.mxiaixy.service;
 
 import com.mxiaixy.pojo.User;
+import com.mxiaixy.untils.Page;
 
 import java.util.List;
 
@@ -23,4 +24,6 @@ public interface UserService {
     void save(User user, String[] roleIds);
 
     void update(User user, String[] ids);
+
+    Page<User> findListUserByPageNo(String p);
 }

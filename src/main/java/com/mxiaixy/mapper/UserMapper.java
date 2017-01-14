@@ -23,4 +23,7 @@ public interface UserMapper {
 
     void delUserAndRoleBy(Integer id);
 
+    Long findUserCount();
+
+    List<User> findUserByPage(@Param("start") int start,@Param("pageSize") int pageSize);
 }

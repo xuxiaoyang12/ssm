@@ -49,4 +49,13 @@
         LEFT JOIN t_role ON t_user_role.roleid = t_role.id
         where t_user.id=#{id}
     </select>
+    <select id="findUserCount" resultType="java.lang.Long">
+        select count(*) from t_user
+    </select>
+    <select id="findUserByPage" resultMap="userMap">
+        SELECT t_user.*,t_role.id AS role_id,t_role.role_name,t_role.view_name FROM t_user
+        LEFT JOIN t_user_role ON t_user_role.userid = t_user .id
+        LEFT JOIN t_role ON t_user_role.roleid = t_role.id
+        limit ${start},${pageSize}
+    </select>
 </mapper>

@@ -3,6 +3,7 @@ package com.mxiaixy.service.impl;
 import com.mxiaixy.mapper.UserMapper;
 import com.mxiaixy.pojo.User;
 import com.mxiaixy.service.UserService;
+import com.mxiaixy.untils.Page;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
@@ -64,8 +65,6 @@ public class UserServiceImpl implements UserService {
             for(String roleId : roleIds){
                 userMapper.saveUserAndRole(user.getId(),Integer.valueOf(roleId));
             }
-
-
         }
 
     }
@@ -85,7 +84,20 @@ public class UserServiceImpl implements UserService {
             //更新用户数据
             userMapper.update(user);
         }
-       
+
+    }
+
+    @Override
+    public Page<User> findListUserByPageNo(String pageNo) {
+        //获取数据总数量
+        int count = userMapper.findUserCount().intValue();
+        //获取分页对象
+        Page<User> page = new Page<User>(count,Integer.valueOf(pageNo));
+        //获取所需页的数据
+        List<User> userList = userMapper.findUserByPage(page.getStart(),page.getPageSize());
+        //把数据存入分页对象中
+        page.setItems(userList);
+        return page;
     }
 
 }

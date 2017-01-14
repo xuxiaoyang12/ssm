@@ -48,7 +48,7 @@
                         </tr>
                         </thead>
                         <tbody>
-                        <c:forEach items="${userList}" var="user">
+                        <c:forEach items="${page.items}" var="user">
                             <tr>
                                 <td>${user.username}</td>
                                 <td>${user.roleName}</td>
@@ -64,7 +64,7 @@
             </div>
             <!-- /.box-body -->
             <div class="box-footer">
-                The footer of the box
+                <ul style="margin:5px 0px" id="pagination" class="pagination pull-right"></ul>
             </div>
             <!-- box-footer -->
         </div>
@@ -94,6 +94,21 @@
 <script src="/static/bootstrap/js/bootstrap.min.js"></script>
 <!-- AdminLTE App -->
 <script src="/static/dist/js/app.min.js"></script>
+<script src="/static/plugins/jquery.twbsPagination.min.js"></script>
+<script>
+    $(function () {
+//分页插件的使用
+        $("#pagination").twbsPagination({
+            totalPages:${page.totalPage},
+            visiblePages:5,
+            href:"/user?p={{number}}",
+            first:"首页",
+            prev:"上一页",
+            next:"下一页",
+            last:"末页"
+        });
+    });
+</script>
 
 </body>
 </html>
