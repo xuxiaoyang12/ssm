@@ -8,4 +8,9 @@
     <select id="findRoleAll" resultType="Role">
         select * from t_role
     </select>
+    <select id="findRoleByUserId" resultType="Role" >
+        SELECT * FROM t_role
+        LEFT JOIN t_user_role ON t_user_role.roleid=t_role.id
+        WHERE t_user_role.userid=#{userid}
+    </select>
 </mapper>

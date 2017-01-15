@@ -28,7 +28,8 @@
 
 
     <select id="findListUser" resultMap="userMap">
-        SELECT t_user.*,t_role.id AS role_id,t_role.role_name,t_role.view_name FROM t_user
+        SELECT t_user.*,t_role.id AS role_id,t_role.role_name,t_role.view_name
+        FROM t_user
         LEFT JOIN t_user_role ON t_user_role.userid = t_user .id
         LEFT JOIN t_role ON t_user_role.roleid = t_role.id
     </select>
@@ -52,10 +53,21 @@
     <select id="findUserCount" resultType="java.lang.Long">
         select count(*) from t_user
     </select>
-    <select id="findUserByPage" resultMap="userMap">
-        SELECT t_user.*,t_role.id AS role_id,t_role.role_name,t_role.view_name FROM t_user
-        LEFT JOIN t_user_role ON t_user_role.userid = t_user .id
-        LEFT JOIN t_role ON t_user_role.roleid = t_role.id
+    <!--<select id="findUserByPage" resultMap="userMap">-->
+        <!--SELECT t_user.*,t_role.id AS role_id,t_role.role_name,t_role.view_name FROM t_user-->
+        <!--LEFT JOIN t_user_role ON t_user_role.userid = t_user .id-->
+        <!--LEFT JOIN t_role ON t_user_role.roleid = t_role.id-->
+        <!--limit ${start},${pageSize}-->
+    <!--</select>-->
+    <select id="findUserByPage" resultMap="userMapNo">
+        select * from t_user
         limit ${start},${pageSize}
     </select>
+    <resultMap id="userMapNo" type="User">
+        <id column="id" property="id"/>
+        <result column="username" property="username"/>
+        <result column="password" property="password"/>
+        <collection  property="roleList"  ofType="role"  column="id"
+                    select="com.mxiaixy.mapper.RoleMapper.findRoleByUserId"/>
+    </resultMap>
 </mapper>

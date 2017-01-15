@@ -31,7 +31,7 @@
                     <h3 class="box-title">添加新数据</h3>
                 </div>
                 <div class="box-body">
-                    <div class="col-md-4">
+                    <div class="col-md-5">
                         <form method="post">
                             <div class="form-group">
                                 <input type="hidden" name="id" value="${user.id}">

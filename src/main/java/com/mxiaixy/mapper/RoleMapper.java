@@ -11,4 +11,6 @@ public interface RoleMapper {
 
 
     List<Role> findRoleAll();
+    List<Role> findRoleByUserId(Integer userid);
+
 }
